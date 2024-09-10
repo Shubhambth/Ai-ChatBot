@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-white text-2xl font-bold">AI Chatbot</h1>
+            <ul class="flex space-x-4">
+                <li><a href="#chat" class="text-white hover:underline">Chat</a></li>
+                <li><a href="#features" class="text-white hover:underline">Features</a></li>
+                <li><a href="#about" class="text-white hover:underline">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Chat Section -->
+    <section id="chat" class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Chat with Our AI</h2>
+
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div class="flex flex-col">
+                <label for="message" class="text-gray-700 font-medium">You:</label>
+                <input type="text" id="message" name="message" value="{{ user_message }}" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">Send</button>
+        </form>
+
+        {% if bot_reply %}
+        <div class="mt-6">
+            <p class="text-gray-700"><strong>Bot:</strong> {{ bot_reply }}</p>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Features of Our AI Bot</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-4 bg-gray-100 rounded-lg shadow">
+                <h3 class="text-xl font-bold text-blue-600">Natural Language Understanding</h3>
+                <p class="mt-2 text-gray-600">Our AI bot can understand and process human language effectively.</p>
+            </div>
+            <div class="p-4 bg-gray-100 rounded-lg shadow">
+                <h3 class="text-xl font-bold text-blue-600">24/7 Support</h3>
+                <p class="mt-2 text-gray-600">Get assistance anytime with our AI, available around the clock.</p>
+            </div>
+            <div class="p-4 bg-gray-100 rounded-lg shadow">
+                <h3 class="text-xl font-bold text-blue-600">Customizable Responses</h3>
+                <p class="mt-2 text-gray-600">Tailor responses to meet the specific needs of your users.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">About Our AI</h2>
+        <p class="text-gray-600">Our AI chatbot is designed to provide seamless and effective communication for users. Whether you need support, have questions, or want to interact with our advanced AI, we have you covered.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 p-4">
+        <div class="container mx-auto text-center text-white">
+            <p>&copy; 2024 AI Chatbot. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
