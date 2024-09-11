@@ -10,7 +10,7 @@ def chatbot(request):
         if user_message:
             # Interact with GPT using the g4f library
             response = g4f.ChatCompletion.create(
-                model='gpt-3.5-turbo',
+                model='gpt-4',
                 messages=[{"role": "user", "content": user_message}]
             )
             bot_reply = response
