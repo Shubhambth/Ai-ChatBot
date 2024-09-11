@@ -11,16 +11,64 @@
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-    <nav class="bg-blue-600 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-white text-2xl font-bold">AI Chatbot</h1>
-            <ul class="flex space-x-4">
-                <li><a href="#chat" class="text-white hover:underline">Chat</a></li>
-                <li><a href="#features" class="text-white hover:underline">Features</a></li>
-                <li><a href="#about" class="text-white hover:underline">About</a></li>
-            </ul>
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div class="flex lg:flex-1">
+          <a href="{% url 'index' %}" class="-m-1.5 p-1.5">
+            <span class="sr-only">Your Company</span>
+            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+          </a>
         </div>
-    </nav>
+        <div class="flex lg:hidden">
+          <button id="open-menu-button" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+            <span class="sr-only">Open main menu</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a href="{% url 'index' %}" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+          <a href="{% url 'features' %}" class="text-sm font-semibold leading-6 text-gray-900">Features</a>
+          
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+
+        </div>
+      </nav>
+    <!-- Mobile menu, show/hide based on menu open state. -->
+      <div id="mobile-menu" class="lg:hidden fixed inset-0 z-50 hidden">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 bg-black/30" aria-hidden="true"></div>
+        <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div class="flex items-center justify-between">
+            <a href="{% url 'index' %}" class="-m-1.5 p-1.5">
+              <span class="sr-only">Your Company</span>
+              <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+            </a>
+            <button id="close-menu-button" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+              <span class="sr-only">Close menu</span>
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a href="{% url 'index' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
+                <a href="{% url 'features' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
+                
+                
+                
+              </div>
+              <div class="py-6">
+                <!-- Additional content if needed -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     <!-- Chat Section -->
     <section id="chat" class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
@@ -51,32 +99,44 @@
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Features of Our AI Bot</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="p-4 bg-gray-100 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-blue-600">Natural Language Understanding</h3>
-                <p class="mt-2 text-gray-600">Our AI bot can understand and process human language effectively.</p>
+                <h3 class="text-xl font-bold text-blue-600">Interactive Study Aid</h3>
+                <p class="mt-2 text-gray-600">Real-time Q&A with explanations, summaries, and practice questions for effective learning.</p>
             </div>
             <div class="p-4 bg-gray-100 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-blue-600">24/7 Support</h3>
-                <p class="mt-2 text-gray-600">Get assistance anytime with our AI, available around the clock.</p>
+                <h3 class="text-xl font-bold text-blue-600">Task Management</h3>
+                <p class="mt-2 text-gray-600">Organizes schedules, sets reminders, and tracks tasks to boost productivity.</p>
             </div>
             <div class="p-4 bg-gray-100 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-blue-600">Customizable Responses</h3>
-                <p class="mt-2 text-gray-600">Tailor responses to meet the specific needs of your users.</p>
+                <h3 class="text-xl font-bold text-blue-600">Contextual Answers</h3>
+                <p class="mt-2 text-gray-600">Provides relevant, accurate responses based on user context and previous interactions.</p>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">About Our AI</h2>
-        <p class="text-gray-600">Our AI chatbot is designed to provide seamless and effective communication for users. Whether you need support, have questions, or want to interact with our advanced AI, we have you covered.</p>
-    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const openMenuButton = document.getElementById('open-menu-button');
+          const closeMenuButton = document.getElementById('close-menu-button');
+          const mobileMenu = document.getElementById('mobile-menu');
 
-    <!-- Footer -->
-    <footer class="bg-blue-600 p-4">
-        <div class="container mx-auto text-center text-white">
-            <p>&copy; 2024 AI Chatbot. All rights reserved.</p>
-        </div>
-    </footer>
+          // Function to open the menu
+          function openMenu() {
+            mobileMenu.classList.remove('hidden');
+          }
+
+          // Function to close the menu
+          function closeMenu() {
+            mobileMenu.classList.add('hidden');
+          }
+
+          // Event listener for the open menu button
+          openMenuButton.addEventListener('click', openMenu);
+
+          // Event listener for the close menu button
+          closeMenuButton.addEventListener('click', closeMenu);
+        });
+
+      </script>
 
 </body>
 

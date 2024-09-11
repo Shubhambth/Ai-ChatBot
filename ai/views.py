@@ -1,6 +1,10 @@
 from django.shortcuts import render
 import g4f
 
+def index(request):
+    return render(request , 'index.html')
+def features(request):
+    return render(request , 'features.html')
 def chatbot(request):
     bot_reply = None
     user_message = ""
