@@ -6,138 +6,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chatbot</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Ensure the navbar and input area are always on screen */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+        }
+
+        #input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: white;
+        }
+
+        #chat-container {
+            margin-top: 4rem; /* Height of the navbar */
+            margin-bottom: 4rem; /* Height of the input area */
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 8rem); /* Adjust based on navbar and input area height */
+            overflow-y: auto;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <nav id="navbar" class="flex items-center justify-between p-6 lg:px-8 bg-white shadow-md" aria-label="Global">
         <div class="flex lg:flex-1">
-          <a href="{% url 'index' %}" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
-            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
-          </a>
+            <a href="{% url 'index' %}" class="-m-1.5 p-1.5">
+                <span class="sr-only">Your Company</span>
+                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+            </a>
         </div>
         <div class="flex lg:hidden">
-          <button id="open-menu-button" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-            <span class="sr-only">Open main menu</span>
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-          </button>
+            <button id="open-menu-button" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                <span class="sr-only">Open main menu</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-          <a href="{% url 'index' %}" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
-          <a href="{% url 'features' %}" class="text-sm font-semibold leading-6 text-gray-900">Features</a>
-          
+            <a href="{% url 'index' %}" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+            <a href="{% url 'features' %}" class="text-sm font-semibold leading-6 text-gray-900">Features</a>
         </div>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+    </nav>
 
-        </div>
-      </nav>
     <!-- Mobile menu, show/hide based on menu open state. -->
-      <div id="mobile-menu" class="lg:hidden fixed inset-0 z-50 hidden">
+    <div id="mobile-menu" class="lg:hidden fixed inset-0 z-50 hidden">
         <!-- Background backdrop, show/hide based on slide-over state. -->
         <div class="fixed inset-0 bg-black/30" aria-hidden="true"></div>
         <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div class="flex items-center justify-between">
-            <a href="{% url 'index' %}" class="-m-1.5 p-1.5">
-              <span class="sr-only">Your Company</span>
-              <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
-            </a>
-            <button id="close-menu-button" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-              <span class="sr-only">Close menu</span>
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          <div class="mt-6 flow-root">
-            <div class="-my-6 divide-y divide-gray-500/10">
-              <div class="space-y-2 py-6">
-                <a href="{% url 'index' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
-                <a href="{% url 'features' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
-                
-                
-                
-              </div>
-              <div class="py-6">
-                <!-- Additional content if needed -->
-              </div>
+            <div class="flex items-center justify-between">
+                <a href="{% url 'index' %}" class="-m-1.5 p-1.5">
+                    <span class="sr-only">Your Company</span>
+                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+                </a>
+                <button id="close-menu-button" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+                    <span class="sr-only">Close menu</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-          </div>
+            <div class="mt-6 flow-root">
+                <div class="-my-6 divide-y divide-gray-500/10">
+                    <div class="space-y-2 py-6">
+                        <a href="{% url 'index' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
+                        <a href="{% url 'features' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
+                    </div>
+                    <div class="py-6">
+                        <!-- Additional content if needed -->
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 
+    <!-- Chat Container -->
+    <div id="chat-container" class="flex flex-col bg-gray-100">
+        <!-- Chat Messages -->
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto scrollbar-thin">
+            <div class="flex flex-col space-y-2">
+                <!-- Messages will be dynamically added here -->
+                {% for x in obj %}
+                <!-- Reply Message -->
+                <div class="flex items-start space-x-2 justify-end">
+                    <div class="bg-blue-100 p-3 rounded-lg">
+                        <p class="text-sm text-blue-800">{{ x.user_chat }}</p>
+                        <span class="text-xs text-gray-500">{{ x.date }}</span>
+                    </div>
+                    <img src="https://via.placeholder.com/40" alt="User" class="w-10 h-10 rounded-full">
+                </div>
+                <div class="flex items-start space-x-2">
+                    <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="User" class="w-10 h-10 rounded-full">
+                    <div class="bg-gray-100 p-3 rounded-lg">
+                        <p class="text-sm">{{ x.bot_responce }}</p>
+                        <span class="text-xs text-gray-500">{{ x.date }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- More messages can be added here -->
+            </div>
+        </div>
+    </div>
 
-    <!-- Chat Section -->
-    <section id="chat" class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Chat with Our AI</h2>
-
-        <form method="POST" class="space-y-4">
+    <!-- Message Input -->
+    <div id="input-area" class="border-t border-gray-200 p-4 bg-gray-50">
+        <form method="POST" class="flex items-center space-x-2">
             {% csrf_token %}
-            <div class="flex flex-col">
-                <label for="message" class="text-gray-700 font-medium">You:</label>
-                <input type="text" id="message" name="message" value="{{ user_message }}" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-            </div>
-            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">Send</button>
+            <input type="text" name="message" placeholder="Type a message..." class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Send</button>
         </form>
-    </section>
-
-    <!-- Bot Reply Section -->
-    {% if bot_reply %}
-    <section id="bot-reply" class="container mx-auto my-10 p-6 bg-green-100 shadow-lg rounded-lg">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Bot Reply</h2>
-        <div class="mt-4 p-4 bg-white rounded-lg shadow">
-            <p class="text-gray-700"><strong>Bot:</strong> {{ bot_reply }}</p>
-        </div>
-    </section>
-    {% endif %}
-
-    <!-- Features Section -->
-    <section id="features" class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Features of Our AI Bot</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="p-4 bg-gray-100 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-blue-600">Interactive Study Aid</h3>
-                <p class="mt-2 text-gray-600">Real-time Q&A with explanations, summaries, and practice questions for effective learning.</p>
-            </div>
-            <div class="p-4 bg-gray-100 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-blue-600">Task Management</h3>
-                <p class="mt-2 text-gray-600">Organizes schedules, sets reminders, and tracks tasks to boost productivity.</p>
-            </div>
-            <div class="p-4 bg-gray-100 rounded-lg shadow">
-                <h3 class="text-xl font-bold text-blue-600">Contextual Answers</h3>
-                <p class="mt-2 text-gray-600">Provides relevant, accurate responses based on user context and previous interactions.</p>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-          const openMenuButton = document.getElementById('open-menu-button');
-          const closeMenuButton = document.getElementById('close-menu-button');
-          const mobileMenu = document.getElementById('mobile-menu');
+            const openMenuButton = document.getElementById('open-menu-button');
+            const closeMenuButton = document.getElementById('close-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const chatMessages = document.getElementById('chat-messages');
 
-          // Function to open the menu
-          function openMenu() {
-            mobileMenu.classList.remove('hidden');
-          }
+            // Function to open the menu
+            function openMenu() {
+                mobileMenu.classList.remove('hidden');
+            }
 
-          // Function to close the menu
-          function closeMenu() {
-            mobileMenu.classList.add('hidden');
-          }
+            // Function to close the menu
+            function closeMenu() {
+                mobileMenu.classList.add('hidden');
+            }
 
-          // Event listener for the open menu button
-          openMenuButton.addEventListener('click', openMenu);
+            // Event listener for the open menu button
+            openMenuButton.addEventListener('click', openMenu);
 
-          // Event listener for the close menu button
-          closeMenuButton.addEventListener('click', closeMenu);
+            // Event listener for the close menu button
+            closeMenuButton.addEventListener('click', closeMenu);
+
+            // Function to scroll to the bottom of chat messages
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Call scrollToBottom on page load
+            scrollToBottom();
+
+            // Optionally, you can call scrollToBottom after new messages are added
+            // For example, if using AJAX to load new messages, call scrollToBottom after the messages are updated
         });
-
-      </script>
+    </script>
 
 </body>
-
+100% working model
 </html>
